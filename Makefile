@@ -21,3 +21,10 @@ migrate:
 
 migrate-fresh:
 	@docker compose exec app php artisan migrate:fresh --seed
+
+
+composer_install:
+	@docker compose exec app composer install
+
+run_command:
+	@docker compose exec app $(ARGS)

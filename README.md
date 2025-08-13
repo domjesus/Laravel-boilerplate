@@ -64,6 +64,39 @@ make run_command ARGS='php artisan migrate --seed'
 - Environment variables: Copy `.env.example` to `.env` and update as needed.
 - Stripe: Configure keys in `.env` and `config/services.php`.
 
+## Stripe Integration
+
+This boilerplate includes Stripe integration for payment processing. To set up Stripe:
+
+1. Add your Stripe keys to the `.env` file:
+
+    ```env
+    STRIPE_KEY=pk_test_yourpublickey
+    STRIPE_SECRET=sk_test_yoursecretkey
+    STRIPE_WEBHOOK_SECRET=whsec_yourwebhooksecret
+    ```
+
+2. Ensure your `config/services.php` contains:
+
+    ```php
+    'stripe' => [
+    	 'key' => env('STRIPE_KEY'),
+    	 'secret' => env('STRIPE_SECRET'),
+    	 'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+    ```
+
+3. Start Stripe CLI to listen for webhooks:
+
+    ```bash
+    stripe login
+    stripe listen --forward-to localhost:8000/stripe/webhook
+    ```
+
+4. See `app/Services/StripeService.php` for integration details and usage examples.
+
+5. For more information, visit the [Stripe Docs](https://stripe.com/docs/).
+
 ## Documentation
 
 - [Laravel Docs](https://laravel.com/docs/12.x/)

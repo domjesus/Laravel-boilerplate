@@ -1,0 +1,68 @@
+services:
+  app:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    # depends_on:
+    #   db:
+    #     condition: service_started
+    image: brown_ads_laravel
+    ports:
+      - 9000:9000
+    container_name: app_brown_ads_laravel
+    restart: unless-stopped
+    working_dir: /var/www/
+    # environment:
+    #   - APP_TIMEZONE=America/New_York
+    #   - APP_KEY=base64:Gmwo+Mea0iCmKeNzXcSY4uE0im4FGGIV4rtYmgCdQHs=
+    volumes:
+      - ./:/var/www
+    networks:
+      - brown_ads_laravel_network
+
+#   db:
+#     image: mysql:8.0.31
+#     container_name: mysql_laravel_saas
+#     restart: unless-stopped
+#     environment:
+#       MYSQL_DATABASE: ${DB_DATABASE}
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_USER: ${DB_USERNAME}
+#       MYSQL_PASSWORD: ${DB_PASSWORD}
+#       SERVICE_TAGS: dev
+#       SERVICE_NAME: mysql
+#     ports:
+#       - '3306:3306'
+#     volumes:
+#       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+#       - mysql-data:/var/lib/mysql
+#     networks:
+#       - saas_laravel_network
+#     healthcheck:
+#       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_brown_ads_laravel
+    restart: unless-stopped
+    ports:
+      - 8002:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - brown_ads_laravel_network
+
+networks:
+  brown_ads_laravel_network:
+    driver: bridge
+    # external: true
+
+volumes:
+  mysql-data:

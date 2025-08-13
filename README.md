@@ -1,53 +1,91 @@
-This is a boilerplate of a Laravel project read to go. It's already installed permission with spatie/permission and comes with integration with stripe.
+# Laravel Boilerplate
 
-# Install composer
+A robust Laravel v12 boilerplate for rapid application development, featuring best practices, Docker support, and modern frontend tooling.
 
-## composer install
+## Features
 
-# Install modules
+- Laravel v12 (PHP, MySQL/SQLite)
+- Dockerized development environment
+- Spatie Permission for roles & permissions
+- React + TypeScript + Inertia.js + Tailwind CSS
+- Repository pattern for data access
+- Stripe integration (see `StripeService.php`)
+- ESLint & Prettier for code quality
+- Unit & integration tests (PHPUnit)
+- Modular, maintainable codebase
 
-## npm install OR npm install --legacy-peer-deps
+## Getting Started
 
-# Docker
+### Prerequisites
 
-## If you are using Docker:
+- Docker & Docker Compose
+- Make (for command shortcuts)
+- Node.js & npm
 
-### make migrate OR docker compose exec app php artisan migrate
+### Installation
 
-### make up OR docker compose up -d
+```bash
+# Clone the repository
+git clone https://github.com/domjesus/laravel-boilerplate.git
+cd laravel-boilerplate
 
-# Migrating and Seeding
+# Start containers
+make up
 
-## make migrate-fresh OR docker compose exec app php artisan migrate OR php artisan migrate:fresh --seed
+# Install PHP dependencies
+make composer_install
 
-# Database
+# Install JS dependencies
+npm install
 
-## The connection being used is Sqlite.
+# Build frontend assets
+npm run build
 
-# Run npm
+# Run migrations & seeders
+make run_command ARGS='php artisan migrate --seed'
+```
 
-## UI auth is already scaffolded
+### Development
 
-## npm run dev
+- Backend: Laravel (`app/`, `routes/`)
+- Frontend: React/TypeScript (`resources/js/`)
+- Tests: PHPUnit (`tests/`)
+- Docker configs: `docker-compose.yml`, `infra/`
 
-## Access http://localhost:8000
+### Useful Commands
 
-# Stripe integration
+- Start server: `make run_command ARGS='php artisan serve'`
+- Run tests: `make run_command ARGS='php artisan test'`
+- Lint JS: `npm run lint`
+- Format JS: `npm run format`
 
-## STRIPE\*KEY=pk_test_zLU001za4WMI9
+## Configuration
 
-## STRIPE_SECRET=sk_test_43owyA00P9kXgnRJ
+- Environment variables: Copy `.env.example` to `.env` and update as needed.
+- Stripe: Configure keys in `.env` and `config/services.php`.
 
-## STRIPE_WEBHOOK_SECRET=whsec\*
+## Documentation
 
-## stripe login
+- [Laravel Docs](https://laravel.com/docs/12.x/)
+- [Spatie Permission](https://spatie.be/docs/laravel-permission/v6/introduction)
+- [Inertia.js](https://inertiajs.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-## stripe listen --forward-to localhost:8000/stripe/webhook
+## Contributing
 
-# Stack:
+Pull requests and issues are welcome! Please follow coding standards and write tests for new features.
 
-# Laravel 12.22.1
+## GitHub Copilot & Coding Standards
 
-# Php 4
+This project uses GitHub Copilot for AI-powered code suggestions and automation. If you want you can follow the coding standards and instructions provided in the `.github/instructions/` directory or create your own instructions:
 
-# React: "^18.2.0",
+- **General Coding Standards:** See `.github/instructions/general-coding.instructions.md` for naming conventions, error handling, and best practices.
+- **Backend:** See `.github/instructions/backend-test.instructions.md` for PHP/Laravel backend guidelines.
+- **Frontend:** See `.github/instructions/frontend-test.instructions.md` for React/TypeScript/Tailwind frontend guidelines.
+- **TypeScript/React:** See `.github/instructions/typescript-react.instructions.md` for TypeScript and React-specific rules.
+
+These instructions help ensure code quality, maintainability, and consistency across the project. All contributors should review and follow these guidelines when submitting code or pull requests.
+
+## License
+
+MIT
